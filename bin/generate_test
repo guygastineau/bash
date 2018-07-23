@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+
+###
+# This script is a wrapper for the ruby based framework built to
+# generate tests from ERB templates for this track.
+#
+# For documentation on this project please checkout *TODO*
+###
+
+SLUG="$1"
+PATH_TO_CANONICAL_DATA="../problem-specifications/exercises/$SLUG/"
+PATH_TO_EXERCISE="exercises/$SLUG/"
+
+usage () {
+  echo "$0 <exercise-slug>" && exit 1
+}
+
+# Validate argument, template, and presence in problem-specifications
+check_arg_and_paths () {
+  if [[ -z "$SLUG" ]]; then
+    echo "$0 requires an exercise slug as an argument!"
+    echo
+    usage
+  fi
+
+  if ! [[ -d "$PATH_TO_CANONICAL_DATA" ]]; then\
+    echo "Error: $SLUG is not in problem-specifications/exercises."
+    echo
+    echo "Aborting... Please get the exercise added first with a PR"
+    echo "    to the exercism/problem-specifications repo."
+    exit 1
+  fi
+
+  if ! [[ -f "${PATH_TO_EXERCISE}.meta/generator_template.erb" ]]; then
+    echo "Error: There is no template for this exercise!"
+    echo
+    echo "Please review documentation at TODO for making new templates."
+    exit 1
+  fi
+}
+
+# Backup the old test file in case there is an error in the template
+save_old_test () {
+  test_name="${PATH_TO_EXERCISE}${SLUG/-/_}_test.sh"
+  if [[ -f "$test_name" ]]; then
+    mv "$test_name" "${PATH_TO_EXERCISE}old_test.sh"
+  fi
+}
+
+main () {
+
+  check_arg_and_paths
+  save_old_test
+
+  data="${PATH_TO_CANONICAL_DATA}canonical-data.json"
+
+  ruby scripts/test_generator.rb "${SLUG/-/_}" "$PATH_TO_EXERCISE" "$data"
+}
+
+main
+
+echo "Congratulations.  It seems like your template worked!"
+echo
+echo "Please check the version located near the top of the new test"
+echo "and make sure that it matches the version in the file located"
+echo "in ${PATH_TO_EXERCISE}.meta"
+echo
+
+echo "Next we will run the bin/validate-exercises script to verify"
+echo "the integrety of the generated test."
+
+read -r -p "press any key to coninue: "
+
+bin/validate-exercises
+
+exit 0

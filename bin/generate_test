@@ -59,18 +59,32 @@ main () {
 
 main
 
+echo
+echo
 echo "Congratulations.  It seems like your template worked!"
 echo
 echo "Please check the version located near the top of the new test"
-echo "and make sure that it matches the version in the file located"
-echo "in ${PATH_TO_EXERCISE}.meta"
+echo "and make sure that it matches the version file located in"
+echo "${PATH_TO_EXERCISE}.meta"
 echo
 
 echo "Next we will run the bin/validate-exercises script to verify"
 echo "the integrety of the generated test."
+echo
 
 read -r -p "press any key to coninue: "
 
 bin/validate-exercises
 
+echo
+echo
+echo "If all the tests passed for your newly generated test file then"
+echo "please verify that it is formatted sensibly and then remove the"
+echo "${PATH_TO_EXERCISE}old_test.sh from the exercise directory."
+echo
+echo "If the tests didn't all pass you may have to update the"
+echo "${PATH_TO_EXERCISE}example.sh to pass any updates included"
+echo "in the new test."
+
+echo "Have a nice day and thank you for contributing!"
 exit 0

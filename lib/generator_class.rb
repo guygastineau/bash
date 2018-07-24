@@ -1,11 +1,11 @@
 # test generator class for the bash track
 
 ###
-# This class allows simple ERB templates to generate tests from the 
+# This class allows simple ERB templates to generate tests from the
 # canonical-data.json file stored in the problem-specifications repo
 # for each exercise.
 #
-# This class is invoked by the test_generator.rb script which is 
+# This class is invoked by the test_generator.rb script which is
 # called by the wrapper bin/generate_test written in bash.
 #
 # For clarification on this project please checkout the dicumentation
@@ -53,8 +53,8 @@ class TestGenerator
 
   private # private methods can only be accessed by the object itself
 
-  ###  
-  # This method puts each object in the cases object from the parsed json 
+  ###
+  # This method puts each object in the cases object from the parsed json
   # into the array @test_map for easy iteration in the template files
   ###
 
@@ -80,7 +80,7 @@ class TestGenerator
   end
 
   ###
-  # Open the file to overwrite or blank if it doesn't exist - 
+  # Open the file to overwrite or blank if it doesn't exist -
   # it doesn't exist we moved it with the wrapper; remember?
   # Write the output of our render method from above to the file.
   ###

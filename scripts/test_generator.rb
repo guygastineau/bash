@@ -9,7 +9,7 @@
 ###
 
 require 'erb' # Need to import embedded ruby for processing templates
-require 'json' # Need to import json for parsing the canonical data 
+require 'json' # Need to import json for parsing the canonical data
 require_relative '../lib/generator_class.rb' # Import our class
 
 # Handle the arguments pssed in by the wrapper
